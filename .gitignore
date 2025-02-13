@@ -1,6 +1,7 @@
-user.json
 images/*
+!images/.gitignore
 example.pdf
 snapshot.txt
 snapshot_raw.txt
 text_all.txt
+user.json
