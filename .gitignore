@@ -5,3 +5,4 @@ snapshot.txt
 snapshot_raw.txt
 text_all.txt
 user.json
+__pycache__/
