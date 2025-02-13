@@ -27,6 +27,15 @@ def delete_conversation(conv_id:str, refresh_token: str):
     # request('DELETE', `/api/chat/${convId}`, refreshToken);
     response = requests.delete(f"https://kimi.moonshot.cn/api/chat/{conv_id}", headers={"Authorization": f"Bearer {refresh_token}"})
     response.raise_for_status()
+    if response.status_code == 204:
+        print(f"Conversation {conv_id} deleted.")
+        with open("conv_id_history", "r", encoding="utf-8") as f:
+            conv_ids = f.readlines()
+        conv_id += "\n"
+        with open("conv_id_history", "w", encoding="utf-8") as f:
+            for id in conv_ids:
+                if id != conv_id:
+                    f.write(id)
     return response
 
 def delete_all_conversation():
@@ -35,9 +44,17 @@ def delete_all_conversation():
     with open("conv_id_history", "r", encoding="utf-8") as f:
         conv_ids = f.readlines()
     for conv_id in conv_ids:
-        delete_conversation(conv_id, user["access_token"])
+        try:
+            delete_conversation(conv_id, user["access_token"])
+        except Exception as e:
+            pass
     with open("conv_id_history", "w", encoding="utf-8") as f:
         f.write("")
 
 if __name__ == '__main__':
     delete_all_conversation()
+    # with open("user.json", "r", encoding="utf-8") as f:
+    #     user = json.load(f)
+    # conv_id = create_conversation(user["access_token"])
+    # print(conv_id)
+    # delete_conversation(conv_id, user["access_token"])
