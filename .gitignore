@@ -5,4 +5,5 @@ snapshot.txt
 snapshot_raw.txt
 text_all.txt
 user.json
+conv_id_history.txt
 __pycache__/
